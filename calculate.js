@@ -1,6 +1,6 @@
-let firstNumb;
-let currentOperator;
-let secondNumb;
+export let firstNumb;
+export let currentOperator;
+export let secondNumb;
 
 function addTwoNumbs(a, b) {
   return a + b;
@@ -18,18 +18,18 @@ function divideTwoNumbs(a, b) {
   return a / b;
 }
 
-function operate(a, b, operator) {
+export function operate(a, b, operator) {
   switch (operator) {
-    case "+":
+    case "&plus;":
       addTwoNumbs(a, b);
       break;
-    case "-":
+    case "&minus;":
       subtractTwoNumbs(a, b);
       break;
-    case "*":
+    case "&times;":
       multiplyTwoNumbs(a, b);
       break;
-    case "/":
+    case "&divide;":
       divideTwoNumbs(a, b);
       break;
   }

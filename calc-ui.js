@@ -1,5 +1,12 @@
+/*import {
+  firstNumb,
+  secondNumb,
+  currentOperator,
+  operate,
+} from "./calculate.js";*/
+
 const keyboardContainer = document.querySelector(".keyboard-container");
-const displayContainer = document.querySelector(".display-container");
+const inputText = document.querySelector(".input-text");
 const calcOperators = [
   `&divide;`,
   `&plusmn;`,
@@ -13,17 +20,38 @@ const calcOperators = [
 ];
 
 function createButton(container, buttonValue) {
-  const numberButton = document.createElement("button");
-  numberButton.innerHTML = `${buttonValue}`;
-  setButtonColor(numberButton, buttonValue);
-  numberButton.setAttribute("class", "calc-button");
-  numberButton.style.fontSize = `20pt`;
-  numberButton.style.width = `${setButtonSize(container, buttonValue)}px`;
-  numberButton.style.height = `${setButtonSize(container)}px`;
-  numberButton.onclick = () => {
-    console.log(buttonValue);
+  const calcButton = document.createElement("button");
+  calcButton.innerHTML = `${buttonValue}`;
+  setButtonColor(calcButton, buttonValue);
+  calcButton.setAttribute("class", "calc-button");
+  calcButton.style.width = `${setButtonSize(container, buttonValue)}px`;
+  calcButton.style.height = `${setButtonSize(container) - 10}px`;
+  calcButton.onclick = () => {
+    const collection = container.children;
+    switch (buttonValue) {
+      case "CE":
+        inputText.innerHTML = inputText.innerHTML.slice(0, -1);
+        if (inputText.innerHTML.includes(".") === false) {
+          collection[17].style.filter = "brightness(1)";
+        }
+        break;
+      case "C":
+        inputText.innerHTML = "";
+        collection[17].style.filter = "brightness(1)";
+        break;
+      case ".":
+        if (inputText.innerHTML.includes(".") === true) {
+          break;
+        }
+        inputText.innerHTML += `${buttonValue}`;
+        calcButton.style.filter = "brightness(0.9)";
+        break;
+      default:
+        inputText.innerHTML += `${buttonValue}`;
+        break;
+    }
   };
-  return numberButton;
+  return calcButton;
 }
 
 function setButtonSize(container, buttonValue) {

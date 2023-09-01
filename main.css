@@ -14,13 +14,26 @@ body {
 }
 
 .display-container {
+  width: 310px;
+  height: 85px;
+  text-align: end;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 25px;
+  background-color: lightgray;
+}
+
+.input-text {
+  margin: 0;
+  font-size: 30pt;
 }
 
 .calc-button {
   border: none;
+  font-size: 20pt;
   border-radius: 25px;
 }
 
 .calc-button:hover {
-  -webkit-filter: brightness(0.9);
+  filter: brightness(0.9);
 }
