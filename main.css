@@ -5,13 +5,22 @@ body {
   align-items: center;
 }
 
-.numpad-container {
+.keyboard-container {
   display: flex;
   flex-direction: row-reverse;
-  width: 300px;
+  width: 350px;
   box-sizing: content-box;
   flex-wrap: wrap;
 }
 
+.display-container {
+}
+
 .calc-button {
+  border: none;
+  border-radius: 25px;
+}
+
+.calc-button:hover {
+  -webkit-filter: brightness(0.9);
 }
