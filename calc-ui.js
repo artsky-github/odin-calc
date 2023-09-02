@@ -30,21 +30,36 @@ function createButton(container, buttonValue) {
     const collection = container.children;
     switch (buttonValue) {
       case "CE":
-        inputText.innerHTML = inputText.innerHTML.slice(0, -1);
-        if (inputText.innerHTML.includes(".") === false) {
-          collection[17].style.filter = "brightness(1)";
+        if (inputText.innerHTML.slice(0, 1) === "-") {
+          collection[1].style.filter = null;
+          inputText.innerHTML = inputText.innerHTML.slice(1);
+        } else {
+          if (inputText.innerHTML.slice(-1) === ".") {
+            collection[17].style.filter = null;
+            inputText.innerHTML = inputText.innerHTML.slice(0, -1);
+          } else {
+            inputText.innerHTML = inputText.innerHTML.slice(0, -1);
+          }
         }
         break;
       case "C":
         inputText.innerHTML = "";
-        collection[17].style.filter = "brightness(1)";
+        collection[17].style.filter = null;
+        collection[1].style.filter = null;
         break;
       case ".":
         if (inputText.innerHTML.includes(".") === true) {
           break;
         }
         inputText.innerHTML += `${buttonValue}`;
-        calcButton.style.filter = "brightness(0.9)";
+        collection[17].style.filter = "brightness(0.9)";
+        break;
+      case "&plusmn;":
+        if (inputText.innerHTML.includes("-") === true) {
+          break;
+        }
+        inputText.innerHTML = `-` + inputText.innerHTML;
+        collection[1].style.filter = "brightness(0.9)";
         break;
       default:
         inputText.innerHTML += `${buttonValue}`;
