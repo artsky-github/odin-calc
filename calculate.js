@@ -1,7 +1,3 @@
-export let firstNumb;
-export let currentOperator;
-export let secondNumb;
-
 function addTwoNumbs(a, b) {
   return a + b;
 }
@@ -15,22 +11,19 @@ function multiplyTwoNumbs(a, b) {
 }
 
 function divideTwoNumbs(a, b) {
+  console.log(a / b);
   return a / b;
 }
 
 export function operate(a, b, operator) {
   switch (operator) {
     case "&plus;":
-      addTwoNumbs(a, b);
-      break;
+      return addTwoNumbs(a, b);
     case "&minus;":
-      subtractTwoNumbs(a, b);
-      break;
+      return subtractTwoNumbs(a, b);
     case "&times;":
-      multiplyTwoNumbs(a, b);
-      break;
+      return multiplyTwoNumbs(a, b);
     case "&divide;":
-      divideTwoNumbs(a, b);
-      break;
+      return divideTwoNumbs(a, b);
   }
 }

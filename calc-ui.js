@@ -1,11 +1,7 @@
-/*import {
-  firstNumb,
-  secondNumb,
-  currentOperator,
-  operate,
-} from "./calculate.js";*/
+import { operate } from "./calculate.js";
 
 const keyboardContainer = document.querySelector(".keyboard-container");
+const collection = keyboardContainer.children;
 const inputText = document.querySelector(".input-text");
 const calcOperators = [
   `&divide;`,
@@ -18,6 +14,13 @@ const calcOperators = [
   `&equals;`,
   `.`,
 ];
+let firstNumb;
+let secondNumb;
+let currentOperator;
+let isOperatorActive;
+let saveNumber;
+
+console.log(collection);
 
 function createButton(container, buttonValue) {
   const calcButton = document.createElement("button");
@@ -27,7 +30,6 @@ function createButton(container, buttonValue) {
   calcButton.style.width = `${setButtonSize(container, buttonValue)}px`;
   calcButton.style.height = `${setButtonSize(container) - 10}px`;
   calcButton.onclick = () => {
-    const collection = container.children;
     switch (buttonValue) {
       case "CE":
         if (inputText.innerHTML.slice(0, 1) === "-") {
@@ -61,7 +63,41 @@ function createButton(container, buttonValue) {
         inputText.innerHTML = `-` + inputText.innerHTML;
         collection[1].style.filter = "brightness(0.9)";
         break;
+      case "&divide;":
+        if (inputText.innerHTML === "") {
+          firstNumb = 0;
+        } else {
+          firstNumb = parseFloat(inputText.innerHTML);
+        }
+        currentOperator = buttonValue;
+        isOperatorActive = true;
+        saveNumber = false;
+        console.log(firstNumb, currentOperator);
+        collection[0].style.filter = "brightness(0.9)";
+        break;
+      case "&times;":
+        break;
+      case "&equals;":
+        if (saveNumber === false) {
+          secondNumb = parseFloat(inputText.innerHTML);
+        }
+        console.log(firstNumb, secondNumb, currentOperator);
+        inputText.innerHTML = `${operate(
+          firstNumb,
+          secondNumb,
+          currentOperator
+        )}`;
+        firstNumb = Math.round(parseFloat(inputText.innerHTML) * 10000) / 10000;
+        saveNumber = true;
+        break;
       default:
+        if (inputText.innerHTML.length === 14) {
+          break;
+        }
+        if (isOperatorActive === true) {
+          inputText.innerHTML = "";
+          isOperatorActive = false;
+        }
         inputText.innerHTML += `${buttonValue}`;
         break;
     }
