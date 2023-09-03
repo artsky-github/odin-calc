@@ -79,6 +79,7 @@ function createButton(container, buttonValue) {
         console.log(firstNumb, currentOperator);
         isOperatorActive = true;
         saveNumber = false;
+        isCalculated = false;
         break;
       case "&equals;":
         if (saveNumber === false) {
@@ -109,7 +110,6 @@ function createButton(container, buttonValue) {
           inputText.innerHTML = "";
           isOperatorActive = false;
         }
-        console.log(isCalculated);
         if (isCalculated === true) {
           inputText.innerHTML = "";
           firstNumb = buttonValue;
