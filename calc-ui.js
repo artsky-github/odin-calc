@@ -17,6 +17,7 @@ let firstNumb;
 let secondNumb;
 let currentOperator;
 let isOperatorActive;
+let isCalculated;
 let saveNumber;
 
 function createButton(container, buttonValue) {
@@ -95,6 +96,7 @@ function createButton(container, buttonValue) {
             : parseFloat(`${operate(firstNumb, secondNumb, currentOperator)}`);
         firstNumb = parseFloat(inputText.innerHTML);
         saveNumber = true;
+        isCalculated = true;
         break;
       default:
         if (inputText.innerHTML.length === 13) {
@@ -106,6 +108,12 @@ function createButton(container, buttonValue) {
         if (isOperatorActive === true) {
           inputText.innerHTML = "";
           isOperatorActive = false;
+        }
+        console.log(isCalculated);
+        if (isCalculated === true) {
+          inputText.innerHTML = "";
+          firstNumb = buttonValue;
+          isCalculated = false;
         }
         inputText.innerHTML += `${buttonValue}`;
         break;
