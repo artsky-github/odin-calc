@@ -37,3 +37,14 @@ body {
 .calc-button:hover {
   filter: brightness(0.9);
 }
+
+.footer {
+  margin-block: 25px;
+  font-size: 12pt;
+}
+
+.github-icon {
+  width: 25px;
+  vertical-align: middle;
+  margin-left: 10px;
+}

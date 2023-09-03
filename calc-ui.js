@@ -1,7 +1,6 @@
 import { operate } from "./calculate.js";
 
 const keyboardContainer = document.querySelector(".keyboard-container");
-const collection = keyboardContainer.children;
 const inputText = document.querySelector(".input-text");
 const calcOperators = [
   `&divide;`,
@@ -20,8 +19,6 @@ let currentOperator;
 let isOperatorActive;
 let saveNumber;
 
-console.log(collection);
-
 function createButton(container, buttonValue) {
   const calcButton = document.createElement("button");
   calcButton.innerHTML = `${buttonValue}`;
@@ -33,11 +30,9 @@ function createButton(container, buttonValue) {
     switch (buttonValue) {
       case "CE":
         if (inputText.innerHTML.slice(0, 1) === "-") {
-          collection[1].style.filter = null;
           inputText.innerHTML = inputText.innerHTML.slice(1);
         } else {
           if (inputText.innerHTML.slice(-1) === ".") {
-            collection[17].style.filter = null;
             inputText.innerHTML = inputText.innerHTML.slice(0, -1);
           } else {
             inputText.innerHTML = inputText.innerHTML.slice(0, -1);
@@ -46,53 +41,67 @@ function createButton(container, buttonValue) {
         break;
       case "C":
         inputText.innerHTML = "";
-        collection[17].style.filter = null;
-        collection[1].style.filter = null;
+        firstNumb = undefined;
+        secondNumb = undefined;
+        currentOperator = undefined;
         break;
       case ".":
         if (inputText.innerHTML.includes(".") === true) {
           break;
         }
+        if (inputText.innerHTML === "") {
+          inputText.innerHTML = "0.";
+          break;
+        }
         inputText.innerHTML += `${buttonValue}`;
-        collection[17].style.filter = "brightness(0.9)";
         break;
       case "&plusmn;":
         if (inputText.innerHTML.includes("-") === true) {
           break;
         }
+        if (inputText.innerHTML === "") {
+          inputText.innerHTML = `-0`;
+          break;
+        }
         inputText.innerHTML = `-` + inputText.innerHTML;
-        collection[1].style.filter = "brightness(0.9)";
         break;
       case "&divide;":
+      case "&times;":
+      case "&plus;":
+      case "&minus;":
         if (inputText.innerHTML === "") {
           firstNumb = 0;
         } else {
           firstNumb = parseFloat(inputText.innerHTML);
         }
         currentOperator = buttonValue;
+        console.log(firstNumb, currentOperator);
         isOperatorActive = true;
         saveNumber = false;
-        console.log(firstNumb, currentOperator);
-        collection[0].style.filter = "brightness(0.9)";
-        break;
-      case "&times;":
         break;
       case "&equals;":
         if (saveNumber === false) {
           secondNumb = parseFloat(inputText.innerHTML);
         }
+        if (firstNumb === undefined) {
+          break;
+        }
         console.log(firstNumb, secondNumb, currentOperator);
-        inputText.innerHTML = `${operate(
-          firstNumb,
-          secondNumb,
-          currentOperator
-        )}`;
-        firstNumb = Math.round(parseFloat(inputText.innerHTML) * 10000) / 10000;
+        inputText.innerHTML =
+          `${operate(firstNumb, secondNumb, currentOperator)}`.length > 13
+            ? parseFloat(
+                `${operate(firstNumb, secondNumb, currentOperator)}`
+              ).toExponential(5)
+            : parseFloat(`${operate(firstNumb, secondNumb, currentOperator)}`);
+        firstNumb = parseFloat(inputText.innerHTML);
         saveNumber = true;
         break;
       default:
-        if (inputText.innerHTML.length === 14) {
+        if (inputText.innerHTML.length === 13) {
           break;
+        }
+        if (inputText.innerHTML.includes("-0") === true) {
+          inputText.innerHTML = inputText.innerHTML.slice(0, -1);
         }
         if (isOperatorActive === true) {
           inputText.innerHTML = "";
