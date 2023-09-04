@@ -18,7 +18,6 @@ let secondNumb;
 let currentOperator;
 let isOperatorActive;
 let isCalculated;
-let saveNumber;
 
 function createButton(container, buttonValue) {
   const calcButton = document.createElement("button");
@@ -45,6 +44,8 @@ function createButton(container, buttonValue) {
         firstNumb = undefined;
         secondNumb = undefined;
         currentOperator = undefined;
+        console.log(firstNumb, secondNumb, currentOperator);
+        isCalculated = false;
         break;
       case ".":
         if (inputText.innerHTML.includes(".") === true) {
@@ -87,11 +88,10 @@ function createButton(container, buttonValue) {
         currentOperator = buttonValue;
         console.log(firstNumb, currentOperator);
         isOperatorActive = true;
-        saveNumber = false;
         isCalculated = false;
         break;
       case "&equals;":
-        if (saveNumber === false) {
+        if (isCalculated === false) {
           secondNumb = parseFloat(inputText.innerHTML);
         }
         if (firstNumb === undefined) {
@@ -105,7 +105,6 @@ function createButton(container, buttonValue) {
               ).toExponential(5)
             : parseFloat(`${operate(firstNumb, secondNumb, currentOperator)}`);
         firstNumb = parseFloat(inputText.innerHTML);
-        saveNumber = true;
         isCalculated = true;
         isOperatorActive = false;
         break;
@@ -124,7 +123,6 @@ function createButton(container, buttonValue) {
         }
         if (isOperatorActive === true) {
           inputText.innerHTML = "";
-          //isOperatorActive = false;
         }
         if (isCalculated === true) {
           inputText.innerHTML = "";
