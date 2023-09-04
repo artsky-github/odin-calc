@@ -29,7 +29,7 @@ function createButton(container, buttonValue) {
   calcButton.style.height = `${setButtonSize(container) - 10}px`;
   calcButton.onclick = () => {
     switch (buttonValue) {
-      case "CE":
+      case "C":
         if (inputText.innerHTML.slice(0, 1) === "-") {
           inputText.innerHTML = inputText.innerHTML.slice(1);
         } else {
@@ -40,7 +40,7 @@ function createButton(container, buttonValue) {
           }
         }
         break;
-      case "C":
+      case "CE":
         inputText.innerHTML = "";
         firstNumb = undefined;
         secondNumb = undefined;
@@ -58,6 +58,7 @@ function createButton(container, buttonValue) {
         break;
       case "&plusmn;":
         if (inputText.innerHTML.includes("-") === true) {
+          inputText.innerHTML = inputText.innerHTML.slice(1);
           break;
         }
         if (inputText.innerHTML === "") {
@@ -70,6 +71,14 @@ function createButton(container, buttonValue) {
       case "&times;":
       case "&plus;":
       case "&minus;":
+        if (isOperatorActive === true) {
+          secondNumb = parseFloat(inputText.innerHTML);
+          inputText.innerHTML = `${operate(
+            firstNumb,
+            secondNumb,
+            currentOperator
+          )}`;
+        }
         if (inputText.innerHTML === "") {
           firstNumb = 0;
         } else {
@@ -98,6 +107,13 @@ function createButton(container, buttonValue) {
         firstNumb = parseFloat(inputText.innerHTML);
         saveNumber = true;
         isCalculated = true;
+        isOperatorActive = false;
+        break;
+      case 0:
+        if (inputText.innerHTML === "0") {
+          break;
+        }
+        inputText.innerHTML += `${buttonValue}`;
         break;
       default:
         if (inputText.innerHTML.length === 13) {
@@ -108,7 +124,7 @@ function createButton(container, buttonValue) {
         }
         if (isOperatorActive === true) {
           inputText.innerHTML = "";
-          isOperatorActive = false;
+          //isOperatorActive = false;
         }
         if (isCalculated === true) {
           inputText.innerHTML = "";
